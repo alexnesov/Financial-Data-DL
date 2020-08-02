@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from time import gmtime, strftime
 import time
 import subprocess,io
-
+import shutil
 
 PATH_DL = 'C:\\Users\\alexa\\Downloads'
 PATH_TARGET = f'C:\\Users\\alexa\\OneDrive\\Desktop\\Finviz downloads\\US_STOCKS'
@@ -28,10 +28,17 @@ def set_daily_directory():
     year, month, day = splitted[0],splitted[1],splitted[2]
     new = "US_STOCKS"+'_'+str(day)+'_'+str(month)+'_'+str(year)
     newdir = os.path.join(PATH_TARGET, f'{new}') 
-    os.mkdir(f'{newdir}')
-    os.startfile(newdir)
-    subprocess.run(['explorer', os.path.realpath(newdir)])
-    print('Directory Created!')
+    if os.path.exists(newdir): #(if True)
+        response = input('A directory with today\'s date already exists, do you want to replace it? (y or n?)')
+        if response == "y" or "yes" or "Y":
+            shutil.rmtree(newdir)
+        os.makedirs(newdir)
+        os.startfile(newdir)
+        print('Old directory successfully replaced!')
+    else:
+        os.mkdir(f'{newdir}')
+        os.startfile(newdir)
+        print('Directory Created!')    
 
 def initilization():
     """
@@ -66,9 +73,10 @@ def loop():
         os.rename(f'{PATH_DL}\\finviz.csv',f'{newdir}\\{name}.csv')
         print(f'Success for: {name} !')
 
+
 if __name__ == "__main__":
-    EMAIL = ""
-    PASSWORD = ""
+    EMAIL = os.environ.get('USER_FINVIZ')
+    PASSWORD = os.environ.get('PASS_FINVIZ')
     web = Browser()
     set_daily_directory()
     initilization()
