@@ -5,9 +5,11 @@ from time import gmtime, strftime
 import time
 import subprocess,io
 import shutil
+import sys
 
 PATH_DL = 'C:\\Users\\alexa\\Downloads'
 PATH_TARGET = f'C:\\Users\\alexa\\OneDrive\\Desktop\\Finviz downloads\\US_STOCKS'
+CONTINUE = "yes"
 
 pairs = [
     ('Valuation','https://elite.finviz.com/screener.ashx?v=121'),
@@ -17,12 +19,14 @@ pairs = [
     ('Technical','https://elite.finviz.com/screener.ashx?v=171')
 ]
 
+
 def set_daily_directory():
     """
     1. This function takes today's date and formats it to fit the old folders names
     2. A new directory is created with this newly created name
     """
     global newdir
+    global CONTINUE
     today = str(datetime.today().strftime('%Y-%m-%d'))
     splitted = today.split('-')
     year, month, day = splitted[0],splitted[1],splitted[2]
@@ -30,15 +34,21 @@ def set_daily_directory():
     newdir = os.path.join(PATH_TARGET, f'{new}') 
     if os.path.exists(newdir): #(if True)
         response = input('A directory with today\'s date already exists, do you want to replace it? (y or n?)')
-        if response == "y" or "yes" or "Y":
+        possibilities = ["y","yes","Yes","YES"]
+        if response in possibilities:
+            CONTINUE = "yes"
             shutil.rmtree(newdir)
-        os.makedirs(newdir)
-        os.startfile(newdir)
-        print('Old directory successfully replaced!')
+            os.makedirs(newdir)
+            os.startfile(newdir)
+            print('Old directory successfully replaced!')
+        else:
+            CONTINUE = "no"
+            print('Process stoped.')
+            sys.exit()
     else:
         os.mkdir(f'{newdir}')
         os.startfile(newdir)
-        print('Directory Created!')    
+        print('Directory Created!')       
 
 def initilization():
     """
@@ -77,8 +87,11 @@ def loop():
 if __name__ == "__main__":
     EMAIL = os.environ.get('USER_FINVIZ')
     PASSWORD = os.environ.get('PASS_FINVIZ')
-    web = Browser()
     set_daily_directory()
-    initilization()
-    loop()
+    if CONTINUE == "yes":
+        web = Browser()
+        initilization()
+        loop()
+    else:
+        sys.exit()
 
