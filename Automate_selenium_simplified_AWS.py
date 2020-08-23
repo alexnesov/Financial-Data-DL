@@ -2,11 +2,9 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 import os
-import sys
 from datetime import datetime, timedelta 
 from time import gmtime, strftime
 import time
-import shutil
 
 url = 'https://www.finviz.com/'
 
