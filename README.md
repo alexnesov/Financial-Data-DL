@@ -7,4 +7,6 @@ Then, it clicks on every desired type of indicators and financials to download, 
 
 <strong>Regarding AWS crontab. Cron command: </strong>
 
+```
 0 22 * * * cd ~/financials-downloader-bot && python3 run.py -e 'email' -p 'pass_word' > ~/financials-downloader-bot/crontab.log 2>&1
+```
