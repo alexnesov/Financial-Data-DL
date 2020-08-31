@@ -6,10 +6,8 @@ import time
 import subprocess,io
 import shutil
 import sys
+import argparse
 
-PATH_DL = 'C:\\Users\\alexa\\Downloads'
-PATH_TARGET = f'C:\\Users\\alexa\\OneDrive\\Desktop\\Finviz downloads\\US_STOCKS'
-CONTINUE = "yes"
 
 pairs = [
     ('Valuation','https://elite.finviz.com/screener.ashx?v=121'),
@@ -19,6 +17,18 @@ pairs = [
     ('Technical','https://elite.finviz.com/screener.ashx?v=171')
 ]
 
+
+def directory_check():
+    """
+    Creates a data folder in root (__file__) if it doesn't exist 
+    and downloads initial data to be able to display something at first program usage
+    """
+    if not os.path.exists(f"{os.path.dirname(os.path.realpath(__file__))}/US_STOCKS"):
+        print("Creating the US_STOCKS directory in root. . .")
+        os.mkdir(os.path.dirname(os.path.realpath(__file__))+ "/US_STOCKS")
+        time.sleep(1)
+    else:
+        pass
 
 def set_daily_directory():
     """
@@ -39,7 +49,9 @@ def set_daily_directory():
             CONTINUE = "yes"
             shutil.rmtree(newdir)
             os.makedirs(newdir)
-            os.startfile(newdir)
+            opener ="open" if sys.platform == "darwin" else "xdg-open"
+            # os.startfile(newdir) (WINDOWS)
+            os.system('xdg-open "%s"' % newdir) # (LINUX)
             print('Old directory successfully replaced!')
         else:
             CONTINUE = "no"
@@ -47,10 +59,13 @@ def set_daily_directory():
             sys.exit()
     else:
         os.mkdir(f'{newdir}')
-        os.startfile(newdir)
+        time.sleep(1)
+        # os.startfile(newdir) (WINDOWS)
+        os.system('xdg-open "%s"' % newdir) # (LINUX)
+
         print('Directory Created!')       
 
-def initilization():
+def initilization(**credentials):
     """
     This function is usefull before the loop to log into the website
     (Finviz elite needs an account) and also to remove the cookies popup
@@ -61,13 +76,13 @@ def initilization():
     print("Accepting cookies..")
     web.click('Accept All') 
     web.click('Login')
-    web.type(f'{EMAIL}' , number=1) # "number 1" refers to the first field, i.e the email"
-    web.type(f'{PASSWORD}' , into='Your password')
+    web.type(credentials['EMAIL'], number=1) # "number 1" refers to the first field, i.e the email"
+    web.type(credentials['PASS'], into='Your password')
     web.click('Log in')
     web.go_to('https://elite.finviz.com/screener.ashx?v=111')
     web.click('export')
     time.sleep(2) 
-    os.rename(f'{PATH_DL}\\finviz.csv',f'{newdir}\\Overview.csv')
+    os.rename(f'{PATH_DL}/finviz.csv',f'{newdir}/Overview.csv')
 
 def loop():
     """
@@ -80,18 +95,34 @@ def loop():
         # We set a 3 seconds sleep to let the system download the file, 
         #otherwise it will immeditaly go to rename, eventhough the dl not finished and hence yield an error
         time.sleep(3) 
-        os.rename(f'{PATH_DL}\\finviz.csv',f'{newdir}\\{name}.csv')
+        os.rename(f'{PATH_DL}/finviz.csv',f'{newdir}/{name}.csv')
         print(f'Success for: {name} !')
 
 
-if __name__ == "__main__":
-    EMAIL = os.environ.get('USER_FINVIZ')
-    PASSWORD = os.environ.get('PASS_FINVIZ')
+
+def main():
+    global PATH_TARGET
+    global web
+    global PATH_DL
+    directory_check()
+    PATH_DL = '/home/nesovic/Downloads'
+    PATH_TARGET = f'{os.path.dirname(os.path.realpath(__file__))}' + '/US_STOCKS'
+    CONTINUE = "yes"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-e", "--email", dest="EMAIL",
+                        type=str, required=True)
+    parser.add_argument("-p", "--pass", dest="PASS",
+                        type=str, required=True)
+    args = parser.parse_args()
+    credentials = args.__dict__
     set_daily_directory()
     if CONTINUE == "yes":
         web = Browser()
-        initilization()
+        initilization(**credentials)
         loop()
     else:
         sys.exit()
 
+
+if __name__ == "__main__":
+    main()
