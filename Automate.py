@@ -30,6 +30,7 @@ def directory_check():
     else:
         pass
 
+
 def set_daily_directory():
     """
     1. This function takes today's date and formats it to fit the old folders names
@@ -65,6 +66,7 @@ def set_daily_directory():
 
         print('Directory Created!')       
 
+
 def initilization(**credentials):
     """
     This function is usefull before the loop to log into the website
@@ -83,6 +85,7 @@ def initilization(**credentials):
     web.click('export')
     time.sleep(2) 
     os.rename(f'{PATH_DL}/finviz.csv',f'{newdir}/Overview.csv')
+
 
 def loop():
     """
