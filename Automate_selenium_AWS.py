@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -8,9 +8,10 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import os
 import time
 import argparse
+from datetime import datetime
+today = str(datetime.today().strftime('%Y-%m-%d'))
 
 url = 'https://www.finviz.com/'
-
 
 pairs = [
     ('Valuation', 'https://elite.finviz.com/screener.ashx?v=121'),
@@ -55,7 +56,7 @@ def get_data(url, **credentials):
         time.sleep(2)
         # Here the CSV is downloaded from the website, but the next line doesn't make sense in AWS context, because it's
         # not downloaded into my computer, but rather, in the cloud.
-        os.rename(os.path.join(download_dir, 'finviz.csv'), os.path.join(download_dir, '{name}.csv'.format(name=name)))
+        os.rename(os.path.join(download_dir, 'finviz.csv'), os.path.join(download_dir, '{name}_{date}.csv'.format(name=name, date=today)))
         print('Success for: {name} !'.format(name=name))
 
 
