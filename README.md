@@ -4,6 +4,7 @@ I wanted to build my own database of historical indicators and financials, day a
 It opens a new chrome window, accepts the cookies to be able to navigate further. It then logs into my account (enters the password and the username).
 Then, it clicks on every desired type of indicators and financials to download, downloads them, renames them. Finally, when they arrive to my local machine, it places them in the desired folder (they get also automatically renamed with today’s date).
 
+I ended up by pushing the code into the cloud (AWS EC2 instance) and scheduled a cron job in the linux environnement.
 
 <strong>Regarding AWS EC2 crontab. Cron command: </strong>
 
