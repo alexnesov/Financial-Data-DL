@@ -14,7 +14,7 @@ I ended up by pushing the code into the cloud (AWS EC2 instance) and scheduled a
 
 <strong> Adding the automatic email log  generation at the end </strong>
 ```
-0 20 * * 1-5 cd ~/financials-downloader-bot && python3 run.py -e "***REMOVED***" -p "AWS9194" > ~/financials-downloader-bot/crontab.log 2>&1 && mail -s "Testing Setup" ***REMOVED*** < crontab.log
+0 20 * * 1-5 cd ~/financials-downloader-bot && python3 run.py -e "email" -p "psword" > ~/financials-downloader-bot/crontab.log 2>&1 && mail -s "Testing Setup" ***REMOVED*** < crontab.log
 ```
 
 <h4>Steps to reproduce to be able to send email via Linux Shell</h4>
