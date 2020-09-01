@@ -45,7 +45,7 @@ smtp_use_tls = yes
 ```
 nano /etc/postfix/sasl_passwd
 ```
---> ```[smtp.gmail.com]:587    USERNAME@gmail.com:PASSWORD```
+Add this line --> ```[smtp.gmail.com]:587    USERNAME@gmail.com:PASSWORD```
 
 
 <strong>Giving permissions:</strong>
