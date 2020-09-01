@@ -12,19 +12,23 @@ I ended up by pushing the code into the cloud (AWS EC2 instance) and scheduled a
 0 22 * * * cd ~/financials-downloader-bot && python3 run.py -e 'email' -p 'pass_word' > ~/financials-downloader-bot/crontab.log 2>&1
 ```
 
+<strong> Adding the automatic email log  generation at the end </strong>
+```
+0 20 * * 1-5 cd ~/financials-downloader-bot && python3 run.py -e "***REMOVED***" -p "AWS9194" > ~/financials-downloader-bot/crontab.log 2>&1 && mail -s "Testing Setup" ***REMOVED*** < crontab.log
+```
 
 <h4>Steps to reproduce to be able to send email via Linux Shell</h4>
 
 First, allow unsecure connections on your gmail account.
 Here: https://myaccount.google.com/lesssecureapps
 
-<strong>Setup:</strong>
+<h4>Setup:</h4>
 
 ```
 sudo apt-get install postfix mailutils libsasl2-2 ca-certificates libsasl2-modules
 ```
 
-<strong> Open postfix config </strong>
+<strong> Open postfix config:</strong>
 
 ```
 nano /etc/postfix/main.cf
