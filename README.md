@@ -13,7 +13,7 @@ I ended up by pushing the code into the cloud (AWS EC2 instance) and scheduled a
 ```
 
 
-<h4>Steps to reproduce to be able to</h4>
+<h4>Steps to reproduce to be able to send email via Linux Shell</h4>
 
 First, allow unsecure connections on your gmail account.
 Here: https://myaccount.google.com/lesssecureapps
@@ -30,7 +30,7 @@ sudo apt-get install postfix mailutils libsasl2-2 ca-certificates libsasl2-modul
 nano /etc/postfix/main.cf
 ```
 
-Add this:
+<strong>Add this:</strong>
 ```
 relayhost = [smtp.gmail.com]:587
 smtp_sasl_auth_enable = yes
