@@ -16,13 +16,14 @@ I ended up by pushing the code into the cloud (AWS EC2 instance) and scheduled a
 ```
 0 20 * * 1-5 cd ~/financials-downloader-bot && python3 run.py -e "email" -p "psword" > ~/financials-downloader-bot/crontab.log 2>&1 && mail -s "Testing Setup" ***REMOVED*** < crontab.log
 ```
+</n>
 
-<h4>Steps to reproduce to be able to send email via Linux Shell</h4>
+<h3>Steps to reproduce to be able to send email via Linux Shell</h3>
 
 First, allow unsecure connections on your gmail account.
 Here: https://myaccount.google.com/lesssecureapps
 
-<h3>Setup:</h3>
+<h3>Installations:</h3>
 
 ```
 sudo apt-get install postfix mailutils libsasl2-2 ca-certificates libsasl2-modules
