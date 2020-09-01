@@ -22,7 +22,7 @@ I ended up by pushing the code into the cloud (AWS EC2 instance) and scheduled a
 First, allow unsecure connections on your gmail account.
 Here: https://myaccount.google.com/lesssecureapps
 
-<h4>Setup:</h4>
+<h3>Setup:</h3>
 
 ```
 sudo apt-get install postfix mailutils libsasl2-2 ca-certificates libsasl2-modules
