@@ -51,10 +51,12 @@ smtp_use_tls = yes
 ```
 
 <strong>Adding gmail pass and username:</strong>
-<p>(sasl_passwd doesn't exist, it has to be crate)</p>d
-```
+<p>(sasl_passwd doesn't exist, it has to be create)</p>
+
+<code>
 vi /etc/postfix/sasl_passwd
-```
+</code>
+
 Add this line --> ```[smtp.gmail.com]:587    USERNAME@gmail.com:PASSWORD```
 
 
