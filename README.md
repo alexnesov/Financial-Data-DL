@@ -37,7 +37,7 @@ sudo apt-get install postfix mailutils libsasl2-2 ca-certificates libsasl2-modul
 <strong> Open postfix config:</strong>
 
 ```
-nano /etc/postfix/main.cf
+vi /etc/postfix/main.cf
 ```
 
 <strong>Add this:</strong>
@@ -51,9 +51,9 @@ smtp_use_tls = yes
 ```
 
 <strong>Adding gmail pass and username:</strong>
-
+<p>(sasl_passwd doesn't exist, it has to be crated
 ```
-nano /etc/postfix/sasl_passwd
+vi /etc/postfix/sasl_passwd
 ```
 Add this line --> ```[smtp.gmail.com]:587    USERNAME@gmail.com:PASSWORD```
 
