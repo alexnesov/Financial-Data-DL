@@ -51,7 +51,7 @@ smtp_use_tls = yes
 ```
 
 <strong>Adding gmail pass and username:</strong>
-<p>(sasl_passwd doesn't exist, it has to be crated
+<p>(sasl_passwd doesn't exist, it has to be crate)</p>d
 ```
 vi /etc/postfix/sasl_passwd
 ```
