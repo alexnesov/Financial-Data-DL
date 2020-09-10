@@ -14,7 +14,12 @@ I ended up by pushing the code into the cloud (AWS EC2 instance) and scheduled a
 
 <strong> Adding the automatic email log  generation at the end </strong>
 ```
-0 20 * * 1-5 cd ~/financials-downloader-bot && python3 run.py -e "email" -p "psword" > ~/financials-downloader-bot/crontab.log 2>&1 && mail -s "Testing Setup" ***REMOVED*** < crontab.log
+#!/bin/bash
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+#DATEVAR=date +%Y_%m_%d
+00 20 * * 1-5 cd ~/financials-downloader-bot && python3 run.py -e "xxxx" -p "xxxx" > ~/financials-downloader-bot/crontab.log 2>&1 && mail -s "Financials_$(date +\%Y_\%m_\%d)" ***REMOVED*** < crontab.log
 ```
 </n>
 
