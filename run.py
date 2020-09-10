@@ -57,7 +57,9 @@ def get_data(url, **credentials):
         # Here the CSV is downloaded from the website, but the next line doesn't make sense in AWS context, because it's
         # not downloaded into my computer, but rather, in the cloud.
         os.rename(os.path.join(download_dir, 'finviz.csv'), os.path.join(download_dir, '{name}_{date}.csv'.format(name=name, date=today)))
-        print('Success for: {name} !'.format(name=name))
+        print('Success for: {name}_{today} !'.format(name=name, today=today))
+
+    browser.quit()
 
 
 def main():
