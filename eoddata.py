@@ -1,9 +1,19 @@
+# -*- coding: utf-8 -*-
+#!/usr/bin/python3
+
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+# from webdriver_manager.chrome import ChromeDriverManager
 import os
 import time
+import argparse
+from datetime import datetime
+today = str(datetime.today().strftime('%Y-%m-%d'))
+
 
 url = 'http://www.eoddata.com/'
-today = str(datetime.today().strftime('%Y-%m-%d'))
 
 
 def get_data(url, **credentials):
