@@ -35,6 +35,10 @@ def get_data(url, **credentials):
     browser = webdriver.Firefox(options=options, capabilities=firefox_capabilities)
 
     browser.get(url)
+    browser.find_element_by_id("ctl00_cph1_lg1_txtEmail").send_keys(credentials['email'])
+    browser.find_element_by_id("ctl00_cph1_lg1_txtPassword").send_keys(credentials['password'])
+    browser.find_element_by_id("ctl00_cph1_lg1_btnLogin").click()
+
 
 def main():
     parser = argparse.ArgumentParser()
