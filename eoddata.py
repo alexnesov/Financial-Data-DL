@@ -19,6 +19,7 @@ import argparse
 
 
 url = 'http://www.eoddata.com/'
+stock_exchange = ['NASDAQ', 'NYSE']
 
 
 def check_by_xpath(driver, xpath):
@@ -47,7 +48,7 @@ def create_browser():
     firefox_capabilities['marionette'] = True
     options = FirefoxOptions()
     options.profile = fp
-    options.headless = False
+    options.headless = True
     browser = webdriver.Firefox(options=options, capabilities=firefox_capabilities)
     return browser
 
@@ -59,7 +60,7 @@ def close_alert(driver):
         time.sleep(5)
 
 
-def get_data(url, **credentials):
+def get_data(url, stock_exchange, **credentials):
     try:
         browser = create_browser()
         browser.get(url)
@@ -74,13 +75,15 @@ def get_data(url, **credentials):
         download_tab.click()
         close_alert(browser)
 
-        nasdaq_option = check_by_xpath(browser, "//select[@id='ctl00_cph1_d1_cboExchange']//option[@value='NASDAQ']")
-        nasdaq_option.click()
-        csv_option = check_by_xpath(browser, "//select[@id='ctl00_cph1_d1_cboDataFormat']//option[normalize-space()='Standard CSV']")
-        csv_option.click()
-        download_btn = check_by_xpath(browser, "//input[@id='ctl00_cph1_d1_btnDownload']")
-        download_btn.click()
-        time.sleep(10)
+        for stock in stock_exchange:
+            print(stock)
+            nasdaq_option = check_by_xpath(browser, f"//select[@id='ctl00_cph1_d1_cboExchange']//option[@value='{stock}']")
+            nasdaq_option.click()
+            csv_option = check_by_xpath(browser, "//select[@id='ctl00_cph1_d1_cboDataFormat']//option[normalize-space()='Standard CSV']")
+            csv_option.click()
+            download_btn = check_by_xpath(browser, "//input[@id='ctl00_cph1_d1_btnDownload']")
+            download_btn.click()
+            time.sleep(10)
     except Exception as exc:
         print(exc)
     finally:
@@ -96,7 +99,7 @@ def main():
                         type=str, required=True)
     args = parser.parse_args()
     credentials = args.__dict__
-    get_data(url, **credentials)
+    get_data(url, stock_exchange, **credentials)
 
 
 if __name__ == '__main__':
