@@ -22,14 +22,16 @@ pairs = [
 ]
 
 
-def get_data(url, **credentials):
+def get_data(url):
     # options = ChromeOptions()
     # options.add_argument("--headless")
     # options.add_argument("--gpu-disabled")
     # browser = webdriver.Chrome(chrome_options=options)
 
-    dir_name, file_name = os.path.split(os.path.abspath(__file__))
-    download_dir = os.path.join(dir_name, 'downloads')
+    #dir_name = '/home/ubuntu/financials-downloader-bot'
+    #download_dir = os.path.join(dir_name, 'downloads')
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    download_dir = os.path.join(dir_path, 'donwloads')
     print("Downloads directory:", download_dir)
 
     fp = webdriver.FirefoxProfile()
@@ -41,13 +43,17 @@ def get_data(url, **credentials):
     firefox_capabilities['marionette'] = True
     options = FirefoxOptions()
     options.profile = fp
-    options.headless = True
+    options.headless = False
     browser = webdriver.Firefox(options=options, capabilities=firefox_capabilities)
 
+
+    str_email = os.environ.get('fin_email')
+    str_pass = os.environ.get('fin_pass')
+    print(type(str_email))
     browser.get(url)
     browser.find_element_by_link_text("Login").click()
-    browser.find_element_by_name('email').send_keys(credentials['email'])
-    browser.find_element_by_name('password').send_keys(credentials['password'])
+    browser.find_element_by_name('email').send_keys(str_email)
+    browser.find_element_by_name('password').send_keys(str_pass)
     browser.find_element_by_css_selector("input.button").click()
 
     for name, url in pairs:
@@ -63,14 +69,14 @@ def get_data(url, **credentials):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-e", "--email", dest="email",
-                        type=str, required=True)
-    parser.add_argument("-p", "--password", dest="password",
-                        type=str, required=True)
-    args = parser.parse_args()
-    credentials = args.__dict__
-    get_data(url, **credentials)
+    #parser = argparse.ArgumentParser()
+    #parser.add_argument("-e", "--email", dest="email",
+    #                    type=str, required=True)
+    #parser.add_argument("-p", "--password", dest="password",
+    #                    type=str, required=True)
+    #args = parser.parse_args()
+    #credentials = args.__dict__
+    get_data(url)
 
 
 if __name__ == '__main__':
