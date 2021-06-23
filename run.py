@@ -31,7 +31,7 @@ def get_data(url):
     #dir_name = '/home/ubuntu/financials-downloader-bot'
     #download_dir = os.path.join(dir_name, 'downloads')
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    download_dir = os.path.join(dir_path, 'donwloads')
+    download_dir = os.path.join(dir_path, 'downloads')
     print("Downloads directory:", download_dir)
 
     fp = webdriver.FirefoxProfile()
